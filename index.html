@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>Tovala Project</title>
+	<link rel="icon" href="https://tovala.com/wp-content/uploads/2017/02/cropped-favicon-1-192x192.png" />
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="style.css">
 </head>
@@ -10,10 +11,22 @@
 
 	<button id="add">Add Rectangle</button>
 	<button id="clear">Clear Board</button>
+
 	<form>
-		<input type="text" placeholder="Enter name of layout" required />
-		<button type="submit">Save Layout</button>
+		<input id="color" name="action" type="radio" checked />
+		Change Color
+		<input id="remove" name="action" type="radio" />
+		Remove Rectangle
 	</form>
+
+	<input id="layoutName" type="text" placeholder="Enter name of layout" required />
+	<button id="submit" type="button">Save Layout</button>
+
+	<select id="layoutList">
+		<option default>-- None --</option>
+	</select>
+
+	<button id='delete'>Delete Selected Layout</button>
 
 	<section id="board"></section>
 
