@@ -43,13 +43,7 @@ submit.addEventListener('click', () => {
 });
 
 list.addEventListener('change', e => {
-	let board = document.querySelector('#board');
-	let option = e.target.options[e.target.options.selectedIndex].textContent;
-	if (localStorage && localStorage.getItem(option)) {
-		board.innerHTML = localStorage.getItem(option);
-	}
-	// need to rebind drag and resize to rects after loading layout
-	addDragResize();
+	loadLayout(e);
 });
 
 deleteButton.addEventListener('click', () => {
@@ -57,22 +51,14 @@ deleteButton.addEventListener('click', () => {
 	deleteLayout(option);
 });
 
-// onTop.addEventListener('click', e => {
-// 	if (e.target.checked) {
-// 		$('.rect').each(function(index, element) {
-// 			$(element)
-// 				.draggable({ stack: 'div' })
-// 				.resizable();
-// 		});
-// 	} else {
-// 		$('.rect').each(function(index, element) {
-// 			$(element)
-// 				.draggable()
-// 				.resizable();
-// 		});
-// 	}
-// 	return;
-// });
+onTop.addEventListener('click', e => {
+	if (e.target.checked) {
+		alwaysOnTop();
+	} else {
+		alwaysOnBottom();
+	}
+	return;
+});
 
 /*
 /
@@ -104,10 +90,9 @@ function createRect() {
 }
 
 function clearBoard() {
-	$('#board').empty();
-	// while (board.firstChild) {
-	// 	board.removeChild(board.firstChild);
-	// }
+	while (board.firstChild) {
+		board.removeChild(board.firstChild);
+	}
 	list.options.selectedIndex = 0;
 }
 
@@ -122,6 +107,16 @@ function handleDblClicks(e) {
 		}
 	}
 	return;
+}
+
+function loadLayout(e) {
+	let option = e.target.options[e.target.options.selectedIndex].textContent;
+	if (localStorage && localStorage.getItem(option)) {
+		board.innerHTML = localStorage.getItem(option);
+	}
+	// need to rebind drag and resize to rects after loading layout
+	alwaysOnTop();
+	onTop.checked = true;
 }
 
 function checkForLayouts() {
@@ -183,15 +178,7 @@ function clearLayoutList() {
 	}
 }
 
-function addDragResize() {
-	$('.rect').each(function(index, element) {
-		this.className = '';
-	});
-	$('#board')
-		.children('div')
-		.each(function(index, element) {
-			$(this).addClass('rect');
-		});
+function alwaysOnTop() {
 	$('.rect')
 		.children()
 		.each(function(index, element) {
@@ -204,11 +191,15 @@ function addDragResize() {
 	});
 }
 //
-// function alwaysOnTop() {
-// 	$('.rect').each(function(index, element) {
-// 		$(element).draggable({ stack: 'div' });
-// 	});
-// 	$('.rect').each(function(index, element) {
-// 		$(element).resizable();
-// 	});
-// }
+function alwaysOnBottom() {
+	$('.rect')
+		.children()
+		.each(function(index, element) {
+			element.remove();
+		});
+	$('.rect').each(function(index, element) {
+		$(this)
+			.draggable()
+			.resizable();
+	});
+}
