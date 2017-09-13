@@ -6,11 +6,10 @@ let removeRect = document.querySelector('#remove');
 let submit = document.querySelector('#submit');
 let list = document.querySelector('#layoutList');
 let deleteButton = document.querySelector('#delete');
+let onTop = document.querySelector('#alwaysOnTop');
 
 let colorArray = ['#b72025', '#1abc9c', '#e67e22', '#3498db', '#9b59b6'];
 let prevColor = null;
-
-let elArray = [];
 
 // init on document load
 let interval = setInterval(function() {
@@ -21,12 +20,14 @@ let interval = setInterval(function() {
 	}
 }, 100);
 
-// EVENT HANDLERS
+/*
+/
+/ EVENT HANDLERS
+/
+*/
+
 clear.addEventListener('click', () => {
-	while (board.firstChild) {
-		board.removeChild(board.firstChild);
-	}
-	list.options.selectedIndex = 0;
+	clearBoard();
 });
 
 add.addEventListener('click', () => {
@@ -34,16 +35,7 @@ add.addEventListener('click', () => {
 });
 
 board.addEventListener('dblclick', e => {
-	if (e.target.parentNode == board) {
-		if (changeColor.checked) {
-			e.target.style.backgroundColor = colorSelect();
-		} else if (removeRect.checked) {
-			board.removeChild(e.target);
-		} else {
-			return;
-		}
-	}
-	return;
+	handleDblClicks(e);
 });
 
 submit.addEventListener('click', () => {
@@ -51,10 +43,13 @@ submit.addEventListener('click', () => {
 });
 
 list.addEventListener('change', e => {
+	let board = document.querySelector('#board');
 	let option = e.target.options[e.target.options.selectedIndex].textContent;
 	if (localStorage && localStorage.getItem(option)) {
 		board.innerHTML = localStorage.getItem(option);
 	}
+	// need to rebind drag and resize to rects after loading layout
+	addDragResize();
 });
 
 deleteButton.addEventListener('click', () => {
@@ -62,7 +57,29 @@ deleteButton.addEventListener('click', () => {
 	deleteLayout(option);
 });
 
-// FUNCTIONS
+// onTop.addEventListener('click', e => {
+// 	if (e.target.checked) {
+// 		$('.rect').each(function(index, element) {
+// 			$(element)
+// 				.draggable({ stack: 'div' })
+// 				.resizable();
+// 		});
+// 	} else {
+// 		$('.rect').each(function(index, element) {
+// 			$(element)
+// 				.draggable()
+// 				.resizable();
+// 		});
+// 	}
+// 	return;
+// });
+
+/*
+/
+/ FUNCTIONS
+/
+*/
+
 function colorSelect() {
 	let color = Math.floor(Math.random() * colorArray.length);
 	if (prevColor == color) {
@@ -78,8 +95,33 @@ function createRect() {
 	rect.style.backgroundColor = colorSelect();
 	board.appendChild(rect);
 	$('.rect')
-		.draggable()
-		.resizable();
+		.draggable({ stack: 'div' })
+		.resizable({
+			resize: function(event, ui) {
+				console.log('resize');
+			}
+		});
+}
+
+function clearBoard() {
+	$('#board').empty();
+	// while (board.firstChild) {
+	// 	board.removeChild(board.firstChild);
+	// }
+	list.options.selectedIndex = 0;
+}
+
+function handleDblClicks(e) {
+	if (e.target.parentNode == board) {
+		if (changeColor.checked) {
+			e.target.style.backgroundColor = colorSelect();
+		} else if (removeRect.checked) {
+			board.removeChild(e.target);
+		} else {
+			return;
+		}
+	}
+	return;
 }
 
 function checkForLayouts() {
@@ -100,7 +142,6 @@ function populateLayoutList(value) {
 }
 
 function saveLayout() {
-	clearLayoutList();
 	let layoutName = document.querySelector('#layoutName').value;
 	let layout = document.querySelector('#board').innerHTML;
 
@@ -109,6 +150,8 @@ function saveLayout() {
 		alert('Please enter a layout name');
 		return;
 	}
+
+	clearLayoutList();
 
 	if (localStorage) {
 		localStorage.setItem(layoutName, layout);
@@ -122,11 +165,11 @@ function saveLayout() {
 }
 
 function deleteLayout(value) {
-	if (value == '-- None --') {
+	// check if default option is not selected
+	if (value == '-- Select --') {
 		return;
 	}
 	localStorage.removeItem(value);
-	clearLayoutList();
 	checkForLayouts();
 	// clear board
 	clear.click();
@@ -134,8 +177,38 @@ function deleteLayout(value) {
 
 // because saving and deleting layouts caused duplicates
 function clearLayoutList() {
-	// > 2 to keep default option
+	// > 2 to keep default option???
 	while (list.childNodes.length > 2) {
 		list.removeChild(list.lastChild);
 	}
 }
+
+function addDragResize() {
+	$('.rect').each(function(index, element) {
+		this.className = '';
+	});
+	$('#board')
+		.children('div')
+		.each(function(index, element) {
+			$(this).addClass('rect');
+		});
+	$('.rect')
+		.children()
+		.each(function(index, element) {
+			element.remove();
+		});
+	$('.rect').each(function(index, element) {
+		$(this)
+			.draggable({ stack: 'div' })
+			.resizable();
+	});
+}
+//
+// function alwaysOnTop() {
+// 	$('.rect').each(function(index, element) {
+// 		$(element).draggable({ stack: 'div' });
+// 	});
+// 	$('.rect').each(function(index, element) {
+// 		$(element).resizable();
+// 	});
+// }

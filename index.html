@@ -12,18 +12,21 @@
 	<button id="add">Add Rectangle</button>
 	<button id="clear">Clear Board</button>
 
-	<form>
-		<input id="color" name="action" type="radio" checked />
-		Change Color
-		<input id="remove" name="action" type="radio" />
-		Remove Rectangle
-	</form>
+	<input id="color" name="action" type="radio" checked />
+	Change Color
+	<input id="remove" name="action" type="radio" />
+	Remove Rectangle
+
+	<label for="alwaysOnTop">
+		<input id="alwaysOnTop" type="checkbox" />
+		Always On Top
+	</label>
 
 	<input id="layoutName" type="text" placeholder="Enter name of layout" required />
 	<button id="submit" type="button">Save Layout</button>
 
 	<select id="layoutList">
-		<option default>-- None --</option>
+		<option default>-- Select --</option>
 	</select>
 
 	<button id='delete'>Delete Selected Layout</button>

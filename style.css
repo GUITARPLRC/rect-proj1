@@ -6,7 +6,15 @@ body {
 .rect {
 	border: 1px solid #000;
 	height: 100px;
+	position: relative;
 	width: 200px;
+}
+
+/* so resize marker doesn't show on top of other rects */
+#board
+	> div
+	> div.ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se {
+	z-index: 0 !important;
 }
 
 /* remove blank option select */
