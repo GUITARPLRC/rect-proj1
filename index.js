@@ -53,8 +53,10 @@ deleteButton.addEventListener('click', () => {
 
 onTop.addEventListener('click', e => {
 	if (e.target.checked) {
+		console.log('check');
 		alwaysOnTop();
 	} else {
+		console.log('not check');
 		alwaysOnBottom();
 	}
 	return;
@@ -81,12 +83,8 @@ function createRect() {
 	rect.style.backgroundColor = colorSelect();
 	board.appendChild(rect);
 	$('.rect')
-		.draggable({ stack: 'div' })
-		.resizable({
-			resize: function(event, ui) {
-				console.log('resize');
-			}
-		});
+		.draggable()
+		.resizable();
 }
 
 function clearBoard() {
@@ -114,9 +112,11 @@ function loadLayout(e) {
 	if (localStorage && localStorage.getItem(option)) {
 		board.innerHTML = localStorage.getItem(option);
 	}
+
 	// need to rebind drag and resize to rects after loading layout
 	alwaysOnTop();
 	onTop.checked = true;
+	document.querySelector('#layoutName').value = option;
 }
 
 function checkForLayouts() {
@@ -156,7 +156,6 @@ function saveLayout() {
 		);
 	}
 	checkForLayouts();
-	document.querySelector('#layoutName').value = '';
 }
 
 function deleteLayout(value) {
@@ -168,6 +167,7 @@ function deleteLayout(value) {
 	checkForLayouts();
 	// clear board
 	clear.click();
+	document.querySelector('#layoutName').value = '';
 }
 
 // because saving and deleting layouts caused duplicates
@@ -190,7 +190,7 @@ function alwaysOnTop() {
 			.resizable();
 	});
 }
-//
+
 function alwaysOnBottom() {
 	$('.rect')
 		.children()
