@@ -4,57 +4,64 @@
 	<title>Rectangle Project</title>
 	<link rel="icon" href="./images/favicon.png" />
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 	<div class="controls">
-		<button id="add">Add Rectangle</button>
-		<button id="clear">Clear Board</button>
+		<button class='btn btn-primary' id="add">Add Rectangle</button>
+		<button class='btn btn-warning' id="clear">Clear Board</button>
 
-		<input id="color" name="action" type="radio" checked />
-		Change Color
-		<input id="remove" name="action" type="radio" />
-		Remove Rectangle
+		<div class='form-group'>
+			<label class="radio-inline"><input id="color" name="action" type="radio" checked />Change Color</label>
+			<label class="radio-inline"><input id="remove" name="action" type="radio" />Remove Rectangle</label>
+		</div>
 
 		<input id="layoutName" type="text" placeholder="Enter name of layout (max: 20 characters)" maxlength="20" required />
-		<button id="save" type="button">Save Layout</button>
+		<button  class='btn btn-success' id="save" type="button">Save Layout</button>
 
-		<select id="layoutList">
+		<select id="layoutList" class="form-control">
 			<option default>-- Select Saved Layout --</option>
 		</select>
 
-		<button id='delete'>Delete Selected Layout</button>
+		<button class='btn btn-danger' id='delete'>Delete Selected Layout</button>
 
-		<ul>
-			<li>To add rectangle: Click add rectangle</li>
-			<li>To clear the area: Click clear board</li>
-			<li>To change color or remove rectangle:
-				<ul>
-					<li>First, select either change color or remove rectangle</li>
-					<li>Second, double click to perform action</li>
-				</ul>
-			</li>
-			<li>To save layout:
-				<ul>
-					<li>First, enter a name for the layout</li>
-					<li>Second, click save layout</li>
-				</ul>
-			</li>
-			<li>To load a saved layout: Select from dropdown list</li>
-			<li>To delete a saved layout:
-				<ul>
-					<li>First, select saved layout from dropdown</li>
-					<li>Second, click delete selected layout</li>
-				</ul>
-			</li>
-		</ul>
+		<div id='accordion'>
+			<h3>Directions</h3>
+			<ul>
+				<li>To add rectangle: Click add rectangle</li>
+				<li>To clear the area: Click clear board</li>
+				<li>To change color or remove rectangle:
+					<ul>
+						<li>First, select either change color or remove rectangle</li>
+						<li>Second, double click to perform action</li>
+					</ul>
+				</li>
+				<li>To save layout:
+					<ul>
+						<li>First, enter a name for the layout</li>
+						<li>Second, click save layout</li>
+					</ul>
+				</li>
+				<li>To load a saved layout: Select from dropdown list</li>
+				<li>To delete a saved layout:
+					<ul>
+						<li>First, select saved layout from dropdown</li>
+						<li>Second, click delete selected layout</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 		<a href="https://github.com/GUITARPLRC/rect-proj1" target="_blank">Click To See Code</a>
 	</div>
 
 	<section id="board"></section>
 
+	<noscript>
+		<h1>Sorry, you do not have JavaScirpt enabled... This will no work :(</h1>
+	</noscript>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="index.js"></script>

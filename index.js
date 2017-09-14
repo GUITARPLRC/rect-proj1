@@ -29,8 +29,16 @@ let interval = setInterval(function() {
 		clearInterval(interval);
 		checkForLayouts();
 		populateLayoutList();
+		// add jquery accordion for directions
+		$('#accordion')
+			.accordion({
+				collapsible: true,
+				active: false,
+				heightStyle: 'fill'
+			})
+			.css('visibility', 'visible');
 	}
-}, 100);
+}, 50);
 
 /*--------------------------
 /
@@ -64,10 +72,6 @@ deleteButton.addEventListener('click', () => {
 	deleteLayout(option);
 });
 
-rectOnTop.addEventListener('click', event => {
-	checkOnTop(event);
-});
-
 /*----------------------
 /
 / FUNCTIONS
@@ -99,6 +103,7 @@ function clearBoard() {
 		board.removeChild(board.firstChild);
 	}
 	list.options.selectedIndex = 0;
+	document.querySelector('#layoutName').value = '';
 }
 
 function handleDblClicks(event) {

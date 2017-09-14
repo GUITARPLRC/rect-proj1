@@ -20,6 +20,7 @@ body {
 	-webkit-box-direction: normal;
 	-ms-flex-direction: column;
 	flex-direction: column;
+	min-height: 88vh;
 	height: 88vh;
 	margin: 0 10px 0 0;
 	padding: 20px 0;
@@ -27,21 +28,33 @@ body {
 	width: 350px;
 }
 .controls button {
-	padding: 5px 10px;
 	margin: 5px 0;
-	max-width: 90%;
 }
-.controls input {
-	margin: 10px 0;
+.controls input[type='text'] {
+	color: #000;
+	margin: 20px 0 0 0;
 	padding: 5px;
-	width: 88%;
+	width: 300px;
 }
 .controls select {
+	margin: 20px 0 0 0;
 	padding: 5px;
-	width: 92%;
+	width: 300px;
 }
-.controls ul {
-	margin: 0 5% 0 0;
+
+.controls #accordion {
+	max-height: 75%;
+	margin: 20px 0 0 0;
+	visibility: hidden;
+	width: 300px;
+}
+.controls li {
+	margin: 10% 0;
+}
+
+.controls a {
+	color: #000;
+	margin: 5% 0 0 0;
 }
 
 #board {
