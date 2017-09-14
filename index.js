@@ -85,7 +85,7 @@ function createRect() {
 	rect.style.backgroundColor = colorSelect();
 	board.appendChild(rect);
 	$('.rect')
-		.draggable()
+		.draggable({ stack: 'div' })
 		.resizable();
 }
 
