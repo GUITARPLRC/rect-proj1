@@ -1,12 +1,19 @@
+/*-------------------------
+/
+/ GLOBAL VARIABLES :(
+/
+/--------------------------
+*/
+
 let board = document.querySelector('#board');
 let clear = document.querySelector('#clear');
 let add = document.querySelector('#add');
 let changeColor = document.querySelector('#color');
 let removeRect = document.querySelector('#remove');
-let submit = document.querySelector('#submit');
+let save = document.querySelector('#save');
 let list = document.querySelector('#layoutList');
 let deleteButton = document.querySelector('#delete');
-let onTop = document.querySelector('#alwaysOnTop');
+let rectOnTop = document.querySelector('#alwaysOnTop');
 
 let colorArray = ['#b72025', '#1abc9c', '#e67e22', '#3498db', '#9b59b6'];
 let prevColor = null;
@@ -20,10 +27,11 @@ let interval = setInterval(function() {
 	}
 }, 100);
 
-/*
+/*--------------------------
 /
 / EVENT HANDLERS
 /
+/---------------------------
 */
 
 clear.addEventListener('click', () => {
@@ -34,16 +42,16 @@ add.addEventListener('click', () => {
 	createRect();
 });
 
-board.addEventListener('dblclick', e => {
-	handleDblClicks(e);
+board.addEventListener('dblclick', event => {
+	handleDblClicks(event);
 });
 
-submit.addEventListener('click', () => {
+save.addEventListener('click', () => {
 	saveLayout();
 });
 
-list.addEventListener('change', e => {
-	loadLayout(e);
+list.addEventListener('change', event => {
+	loadLayout(event);
 });
 
 deleteButton.addEventListener('click', () => {
@@ -51,21 +59,15 @@ deleteButton.addEventListener('click', () => {
 	deleteLayout(option);
 });
 
-onTop.addEventListener('click', e => {
-	if (e.target.checked) {
-		console.log('check');
-		alwaysOnTop();
-	} else {
-		console.log('not check');
-		alwaysOnBottom();
-	}
-	return;
+rectOnTop.addEventListener('click', event => {
+	checkOnTop(event);
 });
 
-/*
+/*----------------------
 /
 / FUNCTIONS
 /
+/-----------------------
 */
 
 function colorSelect() {
@@ -94,12 +96,12 @@ function clearBoard() {
 	list.options.selectedIndex = 0;
 }
 
-function handleDblClicks(e) {
-	if (e.target.parentNode == board) {
+function handleDblClicks(event) {
+	if (event.target.parentNode == board) {
 		if (changeColor.checked) {
-			e.target.style.backgroundColor = colorSelect();
+			event.target.style.backgroundColor = colorSelect();
 		} else if (removeRect.checked) {
-			board.removeChild(e.target);
+			board.removeChild(event.target);
 		} else {
 			return;
 		}
@@ -107,8 +109,9 @@ function handleDblClicks(e) {
 	return;
 }
 
-function loadLayout(e) {
-	let option = e.target.options[e.target.options.selectedIndex].textContent;
+function loadLayout(event) {
+	let option =
+		event.target.options[event.target.options.selectedIndex].textContent;
 	if (localStorage && localStorage.getItem(option)) {
 		board.innerHTML = localStorage.getItem(option);
 	}
@@ -178,12 +181,21 @@ function clearLayoutList() {
 	}
 }
 
+function checkOnTop(event) {
+	if (event.target.checked) {
+		return alwaysOnTop();
+	} else {
+		return keepInOrder();
+	}
+}
+
 function alwaysOnTop() {
 	$('.rect')
 		.children()
 		.each(function(index, element) {
 			element.remove();
 		});
+
 	$('.rect').each(function(index, element) {
 		$(this)
 			.draggable({ stack: 'div' })
@@ -191,15 +203,14 @@ function alwaysOnTop() {
 	});
 }
 
-function alwaysOnBottom() {
+function keepInOrder() {
 	$('.rect')
 		.children()
 		.each(function(index, element) {
 			element.remove();
 		});
+
 	$('.rect').each(function(index, element) {
-		$(this)
-			.draggable()
-			.resizable();
+		console.log($(this));
 	});
 }
