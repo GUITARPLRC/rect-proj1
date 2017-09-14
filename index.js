@@ -13,20 +13,17 @@ let removeRect = document.querySelector('#remove');
 let save = document.querySelector('#save');
 let list = document.querySelector('#layoutList');
 let deleteButton = document.querySelector('#delete');
-let rectOnTop = document.querySelector('#alwaysOnTop');
 
-let colorArray = [
-	'#b72025',
-	'#1abc9c',
-	'#e67e22',
-	'#3498db',
-	'#9b59b6',
-	'#f1c40f',
-	'#2c3e50'
-];
+let colorArray = ['#bdc3c7', '#7f8c8d', '#34495e'];
 let prevColor = null;
 
-// init on document load
+/*-------------------------------
+/
+/ init on document load
+/
+/--------------------------------
+*/
+
 let interval = setInterval(function() {
 	if (document.readyState === 'complete') {
 		clearInterval(interval);
@@ -125,8 +122,7 @@ function loadLayout(event) {
 	}
 
 	// need to rebind drag and resize to rects after loading layout
-	alwaysOnTop();
-	onTop.checked = true;
+	addDragAndResize();
 	document.querySelector('#layoutName').value = option;
 }
 
@@ -189,15 +185,7 @@ function clearLayoutList() {
 	}
 }
 
-function checkOnTop(event) {
-	if (event.target.checked) {
-		return alwaysOnTop();
-	} else {
-		return keepInOrder();
-	}
-}
-
-function alwaysOnTop() {
+function addDragAndResize() {
 	$('.rect')
 		.children()
 		.each(function(index, element) {
@@ -208,17 +196,5 @@ function alwaysOnTop() {
 		$(this)
 			.draggable({ stack: 'div' })
 			.resizable();
-	});
-}
-
-function keepInOrder() {
-	$('.rect')
-		.children()
-		.each(function(index, element) {
-			element.remove();
-		});
-
-	$('.rect').each(function(index, element) {
-		console.log($(this));
 	});
 }
