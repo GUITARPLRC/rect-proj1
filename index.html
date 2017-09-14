@@ -23,14 +23,38 @@
 			Always On Top
 		</label>
 
-		<input id="layoutName" type="text" placeholder="Enter name of layout" required />
+		<input id="layoutName" type="text" placeholder="Enter name of layout (max: 20 characters)" maxlength="20" required />
 		<button id="save" type="button">Save Layout</button>
 
 		<select id="layoutList">
-			<option default>-- Select --</option>
+			<option default>-- Select Saved Layout --</option>
 		</select>
 
 		<button id='delete'>Delete Selected Layout</button>
+
+		<ul>
+			<li>To add rectangle: Click add rectangle</li>
+			<li>To clear the area: Click clear board</li>
+			<li>To change color or remove rectangle:
+				<ul>
+					<li>First, select either change color or remove rectangle</li>
+					<li>Second, double click to perform action</li>
+				</ul>
+			</li>
+			<li>To save layout:
+				<ul>
+					<li>First, enter a name for the layout</li>
+					<li>Second, click save layout</li>
+				</ul>
+			</li>
+			<li>To load a saved layout: Select from dropdown list</li>
+			<li>To delete a saved layout:
+				<ul>
+					<li>First, select saved layout from dropdown</li>
+					<li>Second, click delete selected layout</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 
 	<section id="board"></section>

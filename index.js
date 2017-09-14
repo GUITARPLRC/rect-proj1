@@ -163,7 +163,7 @@ function saveLayout() {
 
 function deleteLayout(value) {
 	// check if default option is not selected
-	if (value == '-- Select --') {
+	if (value == '-- Select Saved Layout --') {
 		return;
 	}
 	localStorage.removeItem(value);
