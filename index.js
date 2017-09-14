@@ -15,7 +15,15 @@ let list = document.querySelector('#layoutList');
 let deleteButton = document.querySelector('#delete');
 let rectOnTop = document.querySelector('#alwaysOnTop');
 
-let colorArray = ['#b72025', '#1abc9c', '#e67e22', '#3498db', '#9b59b6'];
+let colorArray = [
+	'#b72025',
+	'#1abc9c',
+	'#e67e22',
+	'#3498db',
+	'#9b59b6',
+	'#f1c40f',
+	'#2c3e50'
+];
 let prevColor = null;
 
 // init on document load
